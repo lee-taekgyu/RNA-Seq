@@ -2,7 +2,7 @@ bowtie2-build BioResource/hg38.fa BioResource/hg38.fa
 
 fastqc -f fastq --extract -t 256 00.Rawdata/20200925_RNA_MDS_HA/GR*.fastq.gz
 
-java -jar Trimmomatic-0.39/trimmomatic-0.39.jar PE -threads 1024 -phred33 00.Rawdata/20200925_RNA_MDS_HA/GR-1448093_JJB_S4_R1_001.fastq.gz 00.Rawdata/20200925_RNA_MDS_HA/GR-1448093_JJB_S4_R2_001.f        astq.gz 00.Rawdata/20200925_RNA_MDS_HA/trim/GR-1448093_JJB_S4_R1_001.trim.fastq.gz 00.Rawdata/20200925_RNA_MDS_HA/trim/GR-1448093_JJB_S4_R1_001.unpair.fastq.gz 00.Rawdata/20200925_RNA_MDS_HA/trim/        GR-1448093_JJB_S4_R2_001.trim.fastq.gz 00.Rawdata/20200925_RNA_MDS_HA/trim/GR-1448093_JJB_S4_R2_001.unpair.fastq.gz ILLUMINACLIP:Trimmomatic-0.39/adapters/TruSeq3-PE.fa:2:151:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+java -jar Trimmomatic-0.39/trimmomatic-0.39.jar PE -threads 1024 -phred33 00.Rawdata/20200925_RNA_MDS_HA/GR-1448093_JJB_S4_R1_001.fastq.gz 00.Rawdata/20200925_RNA_MDS_HA/GR-1448093_JJB_S4_R2_001.fastq.gz 00.Rawdata/20200925_RNA_MDS_HA/trim/GR-1448093_JJB_S4_R1_001.trim.fastq.gz 00.Rawdata/20200925_RNA_MDS_HA/trim/GR-1448093_JJB_S4_R1_001.unpair.fastq.gz 00.Rawdata/20200925_RNA_MDS_HA/trim/GR-1448093_JJB_S4_R2_001.trim.fastq.gz 00.Rawdata/20200925_RNA_MDS_HA/trim/GR-1448093_JJB_S4_R2_001.unpair.fastq.gz ILLUMINACLIP:Trimmomatic-0.39/adapters/TruSeq3-PE.fa:2:151:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
 
 mkdir 02.Align
 
