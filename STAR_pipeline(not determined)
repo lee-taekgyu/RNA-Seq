@@ -1,5 +1,3 @@
-sample=$1
-
 mkdir 01.Fastqc
 
 fastqc -o 01.Fastqc/ \
@@ -25,35 +23,15 @@ mkdir -p 04.Align/${sample}
 
 #Check function of options 
 STAR --runMode alignReads --runThreadN 20 --outFilterMultimapNmax 10 \
- --alignIntronMin 61 --alignIntronMax 265006 --genomeDir 03.MakeIndex/ \
+ --alignIntronMin 21 --alignIntronMax 0 --genomeDir 03.MakeIndex/ \
  --readFilesIn 02-1.Cleandata/${sample}_R1_001.trimmed.fastq.gz \
  --readFilesCommand zcat \
 02-1.Cleandata/${sample}_R2_001.trimmed.fastq.gz --outSAMtype \
 BAM SortedByCoordinate --outFileNamePrefix 04.Align/${sample}/${sample}_
 
-samtools_0.1.18 index 04.Align/${sample}/${sample}_Aligned.sortedByCoord.out.bam
-
 mkdir 05.htseq_count
 
-#Check differences Intersection mode, I used non-emptymode at first
-htseq-count -s yes -m intersection-strict -f bam 04.Align/${sample}/${sample}_Aligned.sortedByCoord.out.bam \
+htseq-count -r pos -s yes -m union -f bam 04.Align/${sample}/${sample}_Aligned.sortedByCoord.out.bam \
 Bioresource/gencode.v36.annotation.gtf > 05.htseq_count/${sample}_htseq_count.txt
 
-#Not neccessary
-mkdir 06.Gene_Length
-
-#Not neccessary
-python merge_exon.py Bioresource/gencode.v36.annotation.gtf 06.Gene_Length/
-
-samtools_0.1.18 sort 04.Align/${sample}/${sample}_Aligned.sortedByCoord.out.bam 04.Align/${sample}/${sample}_sort 
-samtools_0.1.18 index 04.Align/${sample}/${sample}_sort.bam 
-samtools_0.1.18 idxstats 04.Align/${sample}/${sample}_sort.bam > 04.Align/${sample}/${sample}.idx.tx	
-
-python total_sample_htseq.py 05.htseq_count/ \
-GR-1448093_JJB_S4_htseq_count.txt \
-GR-3894829_JYS_S3_htseq_count.txt \
-GR-4372529_PHS_S7_htseq_count.txt \
-GR-5526470_SYY_S2_htseq_count.txt \
-GR-3514807_YID_S1_htseq_count.txt \
-GR-4081216_KYK_S5_htseq_count.txt \
-GR-4406958_JSJ_S6_htseq_count.txt 
+python htseq_annotation.py ${sample}
