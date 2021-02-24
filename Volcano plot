@@ -1,0 +1,19 @@
+library(ggplot2)
+library(ggrepel)
+genes <- read.table("DEG_DESeq2_adjust.xls", header = TRUE)
+genes <- na.omit(genes)
+genes$DEG <- ifelse(genes$padj < 0.05, "DEG", "Not DEG")
+ggplot(genes, aes(x = log2FoldChange, y = -log10(pvalue))) +
+  ggtitle("Volcano plot") + 
+  geom_point(aes(color = DEG)) +
+  scale_color_manual(values = c("red", "grey")) +
+  labs(x=(Log[2]~FoldChange), y=(log[10]~P~value))+
+  theme_bw(base_size = 12) + 
+  theme(legend.position = "bottom",plot.title = element_text(hjust = 0.5)) +
+  geom_text_repel(
+    data = subset(genes, padj < 0.05),
+    aes(label = gene_name),
+    size = 5,
+    box.padding = unit(1, "lines"),
+    point.padding = unit(0.3, "lines")
+  )
