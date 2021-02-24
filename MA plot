@@ -1,0 +1,19 @@
+library(ggplot2)
+library(ggrepel)
+genes <- read.table("DEG_DESeq2_adjust.xls", header = TRUE, fill = T)
+genes <- na.omit(genes)
+genes$DEG <- ifelse(genes$padj < 0.05, "DEG", "Not DEG")
+ggplot(genes, aes(x = log(baseMean,2), y = log2FoldChange)) +
+  ggtitle("MA plot")+ 
+  geom_point(aes(color = DEG)) +
+  scale_color_manual(values = c("red", "grey")) +
+  labs(x=(Log[2]~baseMean), y=(Log[2]~FoldChange)) +
+  theme_bw(base_size = 12) + 
+  theme(legend.position = "bottom",plot.title = element_text(hjust = 0.5)) +
+  geom_text_repel(
+    data = subset(genes, padj < 0.05),
+    aes(label = Gene),
+    size = 5,
+    box.padding = unit(1, "lines"),
+    point.padding = unit(0.3, "lines")
+  )
