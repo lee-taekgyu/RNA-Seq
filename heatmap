@@ -1,0 +1,12 @@
+heatmap.2(name,
+          Rowv = T,
+          Colv = F,
+          scale="row",
+          col=bluered(256),
+          density.info = "none",
+          trace = "none",
+          xlab="Age",
+          main = "CBC",
+          dendrogram = "row",
+          cexCol=1.0,
+          srtCol=45)
