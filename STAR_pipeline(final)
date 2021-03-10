@@ -7,8 +7,7 @@ fastqc -o 01.Fastqc/ \
 mkdir 02-1.Cleandata
 mkdir 02-2.Unpaired
 
-sickle pe -f 00.Rawdata/20200925_RNA_MDS_HA/${sample}_R1_001.fastq.gz \
--r 00.Rawdata/20200925_RNA_MDS_HA/${sample}_R2_001.fastq.gz \
+sickle pe -f 00.Rawdata/20200925_RNA_MDS_HA/${sample}_R1_001.fastq.gz -r 00.Rawdata/20200925_RNA_MDS_HA/${sample}_R2_001.fastq.gz \
 -t sanger \
 -o 02-1.Cleandata/${sample}_R1_001.trimmed.fastq.gz -p 02-1.Cleandata/${sample}_R2_001.trimmed.fastq.gz \
 -s 02-2.Unpaired/Unpaired_${sample}_001.fastq.gz -q 20 -l 20
