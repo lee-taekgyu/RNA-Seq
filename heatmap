@@ -1,12 +1,24 @@
-heatmap.2(name,
-          Rowv = T,
+# heatmap
+install.packages("gplots")
+library(gplots)
+
+ntd <- normTransform(dds)
+select <- order(rowMeans(counts(dds,normalized = T)),
+                decreasing = T)[0:10000]
+df <- as.data.frame(colData(dds))
+colnames(df) <- c("condition")
+rownames(df) = sampleFiles
+
+x <- assay(ntd)[select, ]
+heatmap.2(x,
+          Rowv = F,
           Colv = F,
-          scale="row",
+          scale = "row",
           col=bluered(256),
           density.info = "none",
           trace = "none",
-          xlab="Age",
-          main = "CBC",
           dendrogram = "row",
-          cexCol=1.0,
-          srtCol=45)
+          cexCol = 0.5,
+          cexRow = 1.2,
+          srtCol = 30,
+          margins = c(10,10))
